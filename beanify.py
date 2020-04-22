@@ -175,6 +175,7 @@ while True:
 		video_capture.release()
 		feedStream.flush()
 		feedStream.close()
+		process.terminate()
 		cv2.destroyAllWindows()
 		sys.exit(0)
 		break

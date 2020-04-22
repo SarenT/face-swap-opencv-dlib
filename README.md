@@ -1,14 +1,7 @@
 # Faceswapping using OpenCV and Dlib
 
-App for Faceswapping using OpenCV, dlib and Tkinter
-based on [this respository](https://github.com/spmallick/learnopencv/tree/master/FaceSwap) for the core of the technique. More about on how it works in this [article](http://www.learnopencv.com/face-swap-using-opencv-c-python/).
-
-
-![alt text][s1]
-
-
-![alt text][s2]
-
+Quick and simple app for face swapping using OpenCV, dlib and Tkinter from webcam feed into another webcam feed for video conferences
+based on [this repository](https://github.com/charlielito/face-swap-opencv-dlib), which itself is based on [this respository](https://github.com/spmallick/learnopencv/tree/master/FaceSwap) for the core of the technique. More about on how it works in this [article](http://www.learnopencv.com/face-swap-using-opencv-c-python/).
 
 ## Requirements
 * Python 2.7
@@ -17,6 +10,8 @@ based on [this respository](https://github.com/spmallick/learnopencv/tree/master
 * Pillow
 * Tkinter
 * Python bindings of dlib.
+* v4l2loopback kernel module
+* ffmpeg
 
 #### Easy install
 Build `OpenCV` or install the light version with `sudo apt-get install libopencv-dev python-opencv`. For Windows users it is always easier to just download the binaries of OpenCV and execute them, see [this web page](http://docs.opencv.org/trunk/d5/de5/tutorial_py_setup_in_windows.html). For `TKinter` in Linux just execute: `apt-get install python-tk` (python binaries in windows usually have Tkinter already installed).
@@ -37,52 +32,29 @@ sudo apt-get install libboost-all-dev
 ```
 Finally just `pip install it` with: `pip install dlib`
 
+As for v4l2loopback, you can either use official repos or here [this repository](https://github.com/umlaeute/v4l2loopback/)
+
 ## Usage
 
-### Desktop application
-
-The app has a button to chose an image from the computer, then it shows the chosen image and tries to find faces within the image. If found, it draws green rectangles around them. Then you can click any face and it put that face in the first face found in the Webcam feed. If you want to undo this just click on the image outside any face detected.
-
+First create a loopback device
 ```
-python main.py
-```
+# See what devices are already there: e.g. /dev/video0 /dev/video1
+ls /dev/video*
+# Now create a new one (once)
+modprobe v4l2loopback devices= card_label="Loopback Camera" exclusive_caps=1
+# Check the name of the new device e.g. /dev/video0 /dev/video1 */dev/video2*
+ls /dev/video*
 
-### Real time from WebCam
-
-![alt text][s3]
-
-If you just want to do a faceswap between two faces (if found) from the feed of the webcam of your pc, just execute another script.
-
-```
-python main_webcam.py
+python3 beanify.py -d /dev/video2
 ```
 
+You can enter change modes on the window or enter commands:
+*k* ... blank feed and releases webcam
+*q* ... quit application and release resources
+*b* ... *beanify* aka enter **Mr. Bean: Whistler's Mother** mode.
+*z*/*x* ... previous face/next face (in imgs/rotate folder)
+*e* ... show face lines
+*l* ... show image label
+*wasd* ... adjust nose in beanify mode
 
-### Between images or snap from WebCam
-
-The other script can swap faces between images and save them modified. To change faces between to files execute:
-
-```
-python main_image.py -f <path_to_image> -f2 <path_to_image2> --webcam
-```
-
-To swap only 2 faces within ONE image just type:
-
-```
-python main_image.py -f <path_to_image>
-```
-
-If you want to swap your face with one in a given image type:
-
-```
-python main_image.py -f <path_to_image> --webcam
-```
-
-The images will be saved into the folder `imgs` with added to the end the word `swapped`.
-
-**Note**: If no -f [file] is given, it will bi take the `imgs/pitts.jpg` as default image.
-
-
-[s1]: https://raw.githubusercontent.com/charlielito/mydata/master/faceswap.gif "S"
-[s2]:  https://raw.githubusercontent.com/charlielito/face-swap-opencv-dlib/master/imgs/action/faceswappitts.gif "S"
-[s3]:  https://raw.githubusercontent.com/charlielito/face-swap-opencv-dlib/master/imgs/action/faceswapreal.gif "S"
+Keep the face images small (pixel size) in the imgs/rotate folder for better performance.
