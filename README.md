@@ -4,7 +4,7 @@ Quick and simple app for face swapping using OpenCV, dlib and Tkinter from webca
 based on [this repository](https://github.com/charlielito/face-swap-opencv-dlib), which itself is based on [this respository](https://github.com/spmallick/learnopencv/tree/master/FaceSwap) for the core of the technique. More about on how it works in this [article](http://www.learnopencv.com/face-swap-using-opencv-c-python/).
 
 ## Requirements
-* Python 2.7
+* Python 3.4
 * OpenCV 3.0+ with python bindings (needed to visualize the images/video)
 * Numpy
 * Pillow
