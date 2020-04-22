@@ -4,3 +4,6 @@ imgs/rotate/Frk2.jpg
 imgs/rotate/Mchl.jpg
 imgs/rotate/Jln.jpg
 *.pyc
+main.py
+main_image.py
+main_webcam.py
