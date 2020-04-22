@@ -50,13 +50,18 @@ python3 beanify.py -d /dev/video2
 
 You can enter change modes on the window or enter commands:
 
-*k* ... blank feed and releases webcam
+**k** ... blank feed and releases webcam
 
-*q* ... quit application and release resources
-*b* ... *beanify* aka enter **Mr. Bean: Whistler's Mother** mode.
-*z*/*x* ... previous face/next face (in imgs/rotate folder)
-*e* ... show face lines
-*l* ... show image label
-*wasd* ... adjust nose in beanify mode
+**q** ... quit application and release resources
+
+**b** ... **beanify** aka enter *Mr. Bean: Whistler's Mother* mode.
+
+**z**/**x** ... previous face/next face (in imgs/rotate folder)
+
+**e** ... show face lines
+
+**l** ... show image label
+
+**wasd** ... adjust nose in beanify mode
 
 Keep the face images small (pixel size) in the imgs/rotate folder for better performance.
