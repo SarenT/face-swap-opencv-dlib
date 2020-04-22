@@ -19,6 +19,7 @@ ap = argparse.ArgumentParser(description='Process webcam feed in realtime to swa
 ap.add_argument("-v", "--verbose", required=False, default="False", help="Verbose output")
 ap.add_argument("-b", "--benchmark", required=False, default="False", help="Print out how long each step requires in milliseconds")
 ap.add_argument('-d', "--device", required=True, help="Path to loopback device")
+ap.add_argument('-w', "--webcam", required=True, help="Path to actual webcam device")
 #
 args = vars(ap.parse_args())
 print(args)
@@ -29,6 +30,7 @@ verbose = False
 benchmark = args['benchmark'] == "True" or args['benchmark'] == "1"
 verbose = args['verbose'] == "True" or args['verbose'] == "1"
 device = args['device']
+webcam = args['webcam']
 
 # Make sure OpenCV is version 3.0 or above
 (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
@@ -41,8 +43,6 @@ device = args['device']
 # Playing from fifo (webcam_fifo)
 # ffmpeg -f rawvideo -s 640x480 -pix_fmt bgr24 -i webcam_fifo -map 0:v -f v4l2 -s 640x480 /dev/video3
 
-
-webcam = True
 
 if int(major_ver) < 3 :
 	print >>sys.stderr, 'ERROR: Script needs OpenCV 3.0 or higher'
@@ -72,7 +72,7 @@ process = subprocess.Popen(["ffmpeg", "-f", "rawvideo", "-s", "640x360", "-pix_f
 feedStream = process.stdin
 
 print("Starting capture...")
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture(webcam)
 print("Capturing...")
 video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 360)
